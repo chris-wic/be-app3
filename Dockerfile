@@ -12,8 +12,8 @@ COPY ./src /src
 COPY ./main.py main.py
 
 # Copiamo il file con le librerie da installare
-COPY requirements.txt /requirements.txt
+COPY requirements.txt /src/requirements.txt
 
 # Filtriamo requirements rimuovendo commenti (inizio e in coda) e righe vuote. Poi installiamo le librerie.
-RUN sed 's/#.*$//' /requirements.txt | sed '/^\s*$/d' > /tmp/req.txt \
+RUN sed 's/#.*$//' /src/requirements.txt | sed '/^\s*$/d' > /tmp/req.txt \
     && pip install --no-cache-dir -r /tmp/req.txt
