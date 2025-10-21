@@ -8,12 +8,11 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 # Copiamo app che contiene main.py
-COPY ./src /src
-COPY ./main.py main.py
+COPY ./app /app
 
 # Copiamo il file con le librerie da installare
-COPY requirements.txt /src/requirements.txt
+COPY requirements.txt /app/requirements.txt
 
 # Filtriamo requirements rimuovendo commenti (inizio e in coda) e righe vuote. Poi installiamo le librerie.
-RUN sed 's/#.*$//' /src/requirements.txt | sed '/^\s*$/d' > /tmp/req.txt \
+RUN sed 's/#.*$//' /app/requirements.txt | sed '/^\s*$/d' > /tmp/req.txt \
     && pip install --no-cache-dir -r /tmp/req.txt
