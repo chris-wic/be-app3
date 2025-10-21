@@ -1,4 +1,4 @@
-from app.src.models import Reservation, ToBeObscuredClient, Cliente
+from src.models import Reservation, ToBeObscuredClient, Cliente
 
 class ClientMapper:
     def map_reservation_to_to_be_obscured_client(self, reservation: Reservation) -> ToBeObscuredClient:

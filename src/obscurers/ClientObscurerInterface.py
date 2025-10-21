@@ -1,4 +1,4 @@
-from app.src.models import ToBeObscuredClient
+from src.models import ToBeObscuredClient
 
 
 class ClientObscurerInterface:

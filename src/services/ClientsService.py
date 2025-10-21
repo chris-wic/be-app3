@@ -1,8 +1,8 @@
 from typing import List, Optional, Dict, Any
-from app.src.mappers.ClientMapper import ClientMapper
-from app.src.clients.ReservationsClientInterface import ReservationsClientInterface
-from app.src.models import ToBeObscuredClient
-from app.src.obscurers.ClientObscurerInterface import ClientObscurerInterface
+from src.mappers.ClientMapper import ClientMapper
+from src.clients.ReservationsClientInterface import ReservationsClientInterface
+from src.models import ToBeObscuredClient
+from src.obscurers.ClientObscurerInterface import ClientObscurerInterface
 from fastapi import HTTPException
 
 class ClientsService:

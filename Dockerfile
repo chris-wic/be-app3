@@ -8,7 +8,8 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 # Copiamo app che contiene main.py
-COPY ./app /app
+COPY ./src /src
+COPY ./main.py main.py
 
 # Copiamo il file con le librerie da installare
 COPY requirements.txt /app/requirements.txt

@@ -1,7 +1,7 @@
-from app.src.clients.ReservationsClient import ReservationsClient
-from app.src.services.ClientsService import ClientsService
-from app.src.mappers.ClientMapper import ClientMapper
-from app.src.obscurers.ClientObscurer import ClientObscurer
+from src.clients.ReservationsClient import ReservationsClient
+from src.services.ClientsService import ClientsService
+from src.mappers.ClientMapper import ClientMapper
+from src.obscurers.ClientObscurer import ClientObscurer
 
 def get_reservations_client() -> ReservationsClient:
     return ReservationsClient()

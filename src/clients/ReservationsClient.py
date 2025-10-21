@@ -2,9 +2,9 @@ from typing import List, Optional, Dict, Any
 
 import httpx
 
-from app.src.clients.ReservationsClientInterface import ReservationsClientInterface
-from app.src.models import Reservation, Cliente
-from app.src.settings import settings
+from src.clients.ReservationsClientInterface import ReservationsClientInterface
+from src.models import Reservation, Cliente
+from src.settings import settings
 
 
 class ReservationsClient(ReservationsClientInterface):

@@ -1,5 +1,5 @@
-from app.src.obscurers.ClientObscurerInterface import ClientObscurerInterface
-from app.src.models import ToBeObscuredClient
+from src.obscurers.ClientObscurerInterface import ClientObscurerInterface
+from src.models import ToBeObscuredClient
 
 class ClientStrongObscurer(ClientObscurerInterface):
     def obscure_client(self, client: ToBeObscuredClient) -> ToBeObscuredClient:

@@ -1,5 +1,5 @@
 from typing import List, Optional, Dict, Any
-from app.src.models import Reservation, Cliente
+from src.models import Reservation, Cliente
 
 class ReservationsClientInterface:
     def get_reservations(self, filters: Optional[Dict[str, Any]] = None) -> List[Reservation]:
