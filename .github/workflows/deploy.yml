@@ -1,0 +1,62 @@
+#etichetta che compare nella tab Actions di GitHub
+name: Deploy per Workshop su ECS
+
+#determinazione avvio workflow
+on:
+#avvio con push su branch test
+  push:
+    branches: [ "main" ]
+#   workflow_dispatch: per avviare manualmente da UI
+
+#definizione job
+jobs:
+  deploy:
+    runs-on: ubuntu-latest #runner per GitHub Actions
+    #environment da cui prendere le variabili
+    environment:
+      name: AWS 
+    #permessi OIDC per assumere un ruolo AWS (id-token) e leggere i contenuti del repo
+    permissions:
+      id-token: write
+      contents: read
+    #definizione variabili d'ambiente
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+      ECS_CLUSTER: ${{ vars.ECS_CLUSTER }}
+      ECS_SERVICE: ${{ vars.ECS_SERVICE }}
+      DEPLOY_ROLE_ARN: ${{ vars.DEPLOY_ROLE_ARN }}
+    #definizione degli step
+    steps:
+      #scarica il codice del repo nella VM del runner
+      - name: Checkout
+        uses: actions/checkout@v4
+      #configurazione parametri connessione AWS
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+          #sessione default 1h (3600s) - settati 15min. (900s)
+          role-duration-seconds: 900
+      #Verifica identita per vedere arn Identity
+      - name: Verify identity
+        run: aws sts get-caller-identity
+      #login sul container registry
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+      #costruzione immagine e caricamento
+      - name: Build, tag, and push image
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker build -t $REGISTRY/${{ env.ECR_REPOSITORY }}:test .
+          docker push $REGISTRY/${{ env.ECR_REPOSITORY }}:test
+        #forcing nuovo deploy usando la stessa task definition (creata in prec. su ecs)
+      - name: Force new deployment (reuse same task def)
+        run: |
+          aws ecs update-service \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --service ${{ env.ECS_SERVICE }} \
+            --force-new-deployment
