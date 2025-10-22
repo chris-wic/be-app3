@@ -73,7 +73,7 @@ class ReservationsClientInterface:
 
 class ReservationsClient(ReservationsClientInterface):
     def __init__(self):
-        self.base_url = settings.reservations_api_base_url
+        self.base_url = 'http://workshop-test-alb-284392989.eu-west-3.elb.amazonaws.com'
 
     def get_reservations(self, filters: Optional[Dict[str, Any]] = None) -> List[Reservation]:
         response = httpx.get(f"{self.base_url}/prenotazioni")
