@@ -150,7 +150,7 @@ class ClientsService:
         # ugly: this logic should be moved in the filter class
         reservations = [reservation for reservation in reservations if reservation.check_out_feedback and not reservation.check_out_feedback.privacy]
         
-        reservations = [reservation for reservation in reservations if reservation.cliente.nome != "x" * len(reservation.cliente.nome) and reservation.cliente.cognome != "x" * len(reservation.cliente.cognome)]
+        #reservations = [reservation for reservation in reservations if reservation.cliente.nome != "x" * len(reservation.cliente.nome) and reservation.cliente.cognome != "x" * len(reservation.cliente.cognome)]
         
         return [self.client_mapper.map_reservation_to_to_be_obscured_client(reservation) for reservation in reservations]
 
